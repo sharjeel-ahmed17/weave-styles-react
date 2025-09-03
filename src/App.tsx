@@ -9,6 +9,7 @@ import Footer from "@/components/Layout/Footer";
 import Index from "./pages/Index";
 import ProductListing from "./pages/ProductListing";
 import ProductDetail from "./pages/ProductDetail";
+import SearchResults from "./pages/SearchResults";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import ThankYou from "./pages/ThankYou";
@@ -32,6 +33,7 @@ const App = () => (
                 <Route path="/men" element={<ProductListing category="men" />} />
                 <Route path="/accessories" element={<ProductListing category="accessories" />} />
                 <Route path="/sale" element={<ProductListing category="sale" />} />
+                <Route path="/search" element={<SearchResults />} />
                 <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />

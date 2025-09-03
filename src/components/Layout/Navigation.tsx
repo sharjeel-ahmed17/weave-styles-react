@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -11,6 +11,7 @@ const Navigation = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const { itemCount } = useCart();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navigationItems = [
     { name: 'Home', href: '/' },
@@ -22,6 +23,14 @@ const Navigation = () => {
 
   const isActiveLink = (href: string) => {
     return location.pathname === href;
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setIsMenuOpen(false);
+    }
   };
 
   return (
@@ -55,7 +64,7 @@ const Navigation = () => {
 
           {/* Search Bar */}
           <div className="hidden lg:flex items-center space-x-4 flex-1 max-w-md mx-8">
-            <div className="relative w-full">
+            <form onSubmit={handleSearch} className="relative w-full">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
               <Input
                 type="text"
@@ -64,7 +73,7 @@ const Navigation = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10 bg-muted/50 border-none focus-visible:ring-1 focus-visible:ring-ring"
               />
-            </div>
+            </form>
           </div>
 
           {/* Desktop Actions */}
@@ -103,7 +112,7 @@ const Navigation = () => {
           <div className="md:hidden py-4 border-t border-border">
             <div className="flex flex-col space-y-4">
               {/* Mobile Search */}
-              <div className="relative">
+              <form onSubmit={handleSearch} className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                 <Input
                   type="text"
@@ -112,7 +121,7 @@ const Navigation = () => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10 bg-muted/50 border-none"
                 />
-              </div>
+              </form>
 
               {/* Mobile Navigation Links */}
               {navigationItems.map((item) => (
